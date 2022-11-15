@@ -11,6 +11,8 @@ namespace Full_GRASP_And_SOLID
 {
     public class Recipe : IRecipeContent // Modificado por DIP
     {
+        public bool Cooked { get; private set; } = false;
+
         // Cambiado por OCP
         private IList<BaseStep> steps = new List<BaseStep>();
 
@@ -50,6 +52,19 @@ namespace Full_GRASP_And_SOLID
             return result;
         }
 
+        private int getCookTime()
+        {
+            int time = 0;
+            foreach (BaseStep step in this.steps)
+            {
+                //se suma el tiempo de cada paso
+                time += step.Time;
+            }
+
+            return time;
+        }
+
+
         // Agregado por Expert
         public double GetProductionCost()
         {
@@ -62,5 +77,27 @@ namespace Full_GRASP_And_SOLID
 
             return result;
         }
+  
+
+        //Aplique Creator 
+        public void Cook()
+        {
+            
+            if (!this.Cooked)
+            {
+                TimerClient client = new Time(this);
+                CountdownTimer timer = new CountdownTimer();
+                timer.Register(this.getCookTime(), client);
+            }
+        }
+
+        //método creado para poder cambiar el valor de Cooked a true
+        public void ChangeCookedToTrue()
+        {
+
+            this.Cooked = true;
+
+        }
+
     }
 }
