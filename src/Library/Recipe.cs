@@ -52,7 +52,7 @@ namespace Full_GRASP_And_SOLID
             return result;
         }
 
-        private int getCookTime()
+        private int GetCookTime()
         {
             int time = 0;
             foreach (BaseStep step in this.steps)
@@ -87,7 +87,7 @@ namespace Full_GRASP_And_SOLID
             {
                 TimerClient client = new Time(this);
                 CountdownTimer timer = new CountdownTimer();
-                timer.Register(this.getCookTime(), client);
+                timer.Register(this.GetCookTime(), client);
             }
         }
 
