@@ -77,27 +77,43 @@ namespace Full_GRASP_And_SOLID
 
             return result;
         }
-  
+
 
         //Aplique Creator 
         public void Cook()
         {
-            
-            if (!this.Cooked)
-            {
-                TimerClient client = new Time(this);
-                CountdownTimer timer = new CountdownTimer();
-                timer.Register(this.GetCookTime(), client);
-            }
-        }
 
-        //método creado para poder cambiar el valor de Cooked a true
-        public void ChangeCookedToTrue()
+            if (this.Cooked) { throw new Exception("Ya está cocido."); }
+
+            TimerClient client = new Time(this);
+            CountdownTimer timer = new CountdownTimer();
+            timer.Register(this.GetCookTime(), client);
+
+        }
+        // Creo la clase Time como privada dentro de Recipe para que la pueda llamar dentro de Recipe 
+        // y seguir cumpliendo con SRP
+        private class Time : TimerClient
         {
+            public Recipe Recipe;
 
-            this.Cooked = true;
+
+            public Time(Recipe recipe)
+            {
+
+                this.Recipe = recipe;
+
+            }
+
+            
+            public void TimeOut()
+            {
+
+                this.Recipe.Cooked = true;
+
+            }
 
         }
+
 
     }
 }

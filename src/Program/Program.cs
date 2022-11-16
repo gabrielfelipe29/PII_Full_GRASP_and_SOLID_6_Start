@@ -38,6 +38,7 @@ namespace Full_GRASP_And_SOLID
             recipe.Cook();
             Thread.Sleep(500); // 0.5 segundos
             Console.WriteLine($"Cooked: {recipe.Cooked}");
+            recipe.Cook();
 
         }
 
